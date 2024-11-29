@@ -83,21 +83,10 @@ int main(int argc, char **argv)
                                 nodePointers[j] = nodePointers[j] + 1;
 
                         }
-                        cout << nodePointers[i] << " ";
+                        //cout << nodePointers[i] << " ";
 
 
                 }
-
-        //add edges from each letter node to the sink
-        for (int i = 0; i < wordLen; i++)
-        {
-            int letterNode = numDice + i + 1;
-
-                        if(nodePointers[letterNode] > 0){
-                                graph[letterNode].push_back(sink);
-                                numSink ++;
-                        }
-        }
                 for (int i = 0; i < graph.size(); i++)
         {
             cout << "Node " << i << ": ";
@@ -134,29 +123,49 @@ int main(int argc, char **argv)
         }
         cout << endl;
 
+
                 for(int i = 0; i < wordLen; i++){
                         int OGnode = -1;
                         int node = -1;
                         int letterNode = numDice + i + 1;
-                        if(nodePointers[letterNode] = 1){
+                        if(nodePointers[letterNode] == 1){
                                 OGnode = reverseGraph[letterNode][0];
                                 node = letterNode;
-                                cout << OGnode;
+                                cout << letterNode << "P: " << nodePointers[letterNode] << endl;
 
                         }
                         if(node != -1){
-                                for(int k = 1; k < numDice+1; k++)
-                                {
-                                        for(int j : graph[i]){
-                                                if(j == OGnode && k != node){
-                                                        auto it = remove(graph[k].begin(), graph[k].end(), j);
-                                                        graph[k].erase(it, graph[k].end());
+                                //cout << letterNode << "P: " << nodePointers[letterNode] << endl;
+                                        for(int k = 0; k < graph[OGnode].size(); k++){
+                                                int j = graph[OGnode][k];
+                                                cout << "(j): " << j << endl;
+                                                cout << "Node" << node << endl;
+                                                cout << "OGnodeS" << graph[OGnode].size() << endl;
+                                                if(j != node && graph[OGnode].size() != 1){
+                                                        cout << j << endl;
+                                                        auto it = remove(graph[OGnode].begin(), graph[OGnode].end(), j);
+                                                        graph[OGnode].erase(it, graph[OGnode].end());
+                                                        nodePointers[j] = nodePointers[j] - 1;
+                                                        k--;
                                                 }
                                         }
-                                }
                         }
                 }
+                //add edges from each letter node to the sink
+        for (int i = 0; i < wordLen; i++)
+        {
+            int letterNode = numDice + i + 1;
+
+            if(nodePointers[letterNode] > 0){
+                graph[letterNode].push_back(sink);
+                                //fix numsink calculations
+                                numSink++;
+            }
+        }
                 if(numSink != wordLen) cout << "Cannot spell " << word << endl;
+                else{
+
+                }
 
         for (int i = 0; i < graph.size(); i++)
         {
