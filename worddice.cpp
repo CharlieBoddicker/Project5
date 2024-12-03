@@ -6,6 +6,38 @@ using namespace std;
 #include <unordered_map>
 #include <unordered_set>
 #include <algorithm>
+#include <deque>
+
+bool bfs(vector<vector<int>> graph)
+{
+    int sink = 0;
+    int source = graph.size()-1;
+    deque<int> frontier;
+    vector<int> visited;
+    vector<int> path;
+    frontier.push_back(sink);
+    while(!frontier.empty())
+    {
+        int node = frontier[0];
+
+        frontier.pop_front();
+        visited.push_back(node);
+
+        if(node == source) return 1;
+
+        for(int i = 0; i < graph[node].size(); i++)
+        {
+            bool cont = true;
+            for(int j = 0; j < visited.size(); j++)
+            {
+                if(visited[j] == graph[node][i]) cont = false;
+                if(cont) frontier.push_back(graph[node][i]);
+            }
+        }
+    }
+    return 0;
+
+}
 
 int main(int argc, char **argv)
 {
