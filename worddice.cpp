@@ -31,8 +31,8 @@ bool bfs(vector<vector<int>> graph)
             for(int j = 0; j < visited.size(); j++)
             {
                 if(visited[j] == graph[node][i]) cont = false;
-                if(cont) frontier.push_back(graph[node][i]);
             }
+            if(cont) frontier.push_back(graph[node][i]);
         }
     }
     return 0;
